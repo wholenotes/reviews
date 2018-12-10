@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
-
+  before_action :is_review_author?, only: [:edit, :destroy]
   # GET /reviews
   # GET /reviews.json
   def index
@@ -14,6 +14,7 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    @author = User.find(@review.user_id)
   end
 
   # GET /reviews/new
@@ -29,6 +30,7 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
+    @review.user_id = current_user.id
 
     respond_to do |format|
       if @review.save
@@ -66,6 +68,10 @@ class ReviewsController < ApplicationController
   end
 
   private
+    def is_review_author?
+      redirect_to new_user_session_path unless current_user.id == @review.user_id
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_review
       @review = Review.find(params[:id])
@@ -73,6 +79,6 @@ class ReviewsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
-      params.require(:review).permit(:review_text, :author, :latitude, :longitude)
+      params.require(:review).permit(:review_text, :author, :latitude, :longitude, :image, :user_id, :address)
     end
 end

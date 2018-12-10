@@ -1,13 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<p><%= image_tag(@review.image_url.to_s) %></p>
 <p>
   <strong>Review text:</strong>
   <%= @review.review_text %>
 </p>
 
 <p>
-  <strong>Author:</strong>
-  <%= @review.author %>
+  <strong>Author Email:</strong>
+  <%= @author.email %>
 </p>
 
 <p>

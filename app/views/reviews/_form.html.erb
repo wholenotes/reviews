@@ -12,13 +12,12 @@
   <% end %>
 
   <div class="field">
+    add an image....
+    <%= form.file_field :image %>
+  </div>
+  <div class="field">
     <%= form.label :review_text %>
     <%= form.text_area :review_text %>
-  </div>
-
-  <div class="field">
-    <%= form.label :author %>
-    <%= form.text_field :author %>
   </div>
 
   <div class="field">
